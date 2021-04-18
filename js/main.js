@@ -12,14 +12,18 @@
 // authors/creators/developers who've contributed code prior to forking in all copies and derivative works.
 
 var xSize = 50;
-var ySize = 16;
+var ySize = 20;
 
 
 var totalVaccinated = 0;
 var numInfected = 0;
 var numVacInfected = 0;
-var javaVaxColor = "";
-var javaInfectedColor = "";
+var vaxEmoji = "💉";
+var infectedEmoji = "🦠";
+var antiVaxEmoji = "🥴";
+var vaxBG = "clear";
+var infectedBG = "clear"
+var antiVaxBG = "clear";
 
 function isVac(vacRate)
 {
@@ -33,10 +37,7 @@ function isVac(vacRate)
 function displayTable(populace)
 {
 	myCell = document.getElementById("cell0-0");
-	myCell.style.color = "#000000";
-	javaInfectedColor = myCell.style.color;
-	myCell.style.color = "#00b000";
-	javaVaxColor = myCell.style.color;
+
 
 	totalVaccinated = 0;
 	for (x=0;x<xSize;x++)
@@ -47,13 +48,15 @@ function displayTable(populace)
 			if (populace[x][y])
 			{
 				totalVaccinated++;
-				myCell.style.color = "#00b000";
-				myCell.text = "o";
+
+				myCell.style.background = vaxBG;
+				myCell.text = vaxEmoji;
 			}
 			else
 			{
-				myCell.style.color = "#e00000";
-				myCell.text = "o";
+
+				myCell.style.background = antiVaxBG;
+				myCell.text = antiVaxEmoji;
 			}
 		}
 	}
@@ -67,8 +70,12 @@ function displayTable(populace)
 function populate()
 {
 	var tmpRand,x,y;
-	var vacRateLeft = document.getElementById('Left').value;
+	vaxEmoji = document.getElementById('vaxEmojiSet').value;
+	antiVaxEmoji = document.getElementById('antiVaxEmojiSet').value;
+	infectedEmoji = document.getElementById('infectedEmojiSet').value;
+	// var noBG = document.getElementById('noBG').checked;
 	var isSame = document.getElementById('RightSame').checked;
+	var vacRateLeft = document.getElementById('Left').value;
 	if (isSame)
 	{
 		document.getElementById('Right').value = vacRateLeft;
@@ -105,14 +112,17 @@ function populate()
 	document.getElementById('PercentVacPopInfected').value = "";
 	document.getElementById('PercentUnvacPopInfected').value = "";
 	document.getElementById('PercentInfectedVac').value = "";
+	document.getElementById('vaxInfoEmoji').innerText = vaxEmoji;
+	document.getElementById('antiVaxInfoEmoji').innerText = antiVaxEmoji;
+	document.getElementById('infectedInfoEmoji').innerText = infectedEmoji;
 }
 
 function isVaccinated(x,y)
 {
 	myCell = document.getElementById("cell"+y+"-"+x);
-	if (myCell.style.color == javaVaxColor)
+	if (myCell.text == vaxEmoji)
 	{
-		// Since we're changing cell colors anyway, let's consider it storing the result
+		// Since we're changing cells anyway, let's consider it storing the result
 		return true;
 	}
 	else
@@ -122,7 +132,7 @@ function isVaccinated(x,y)
 function isInfected(x,y)
 {
 	myCell = document.getElementById("cell"+y+"-"+x);
-	if (myCell.style.color == javaInfectedColor)
+	if (myCell.text == infectedEmoji)
 		return true;
 	else
 		return false;
@@ -140,7 +150,7 @@ function infect(x,y)
 
 	myCell = document.getElementById("cell"+y+"-"+x);
 	numInfected++;
-	if (myCell.style.color == javaVaxColor)
+	if (myCell.text == vaxEmoji)
 	{
 		numVacInfected++;
 	}
@@ -161,8 +171,8 @@ function infect(x,y)
 	document.getElementById('PercentInfectedVac').value = percentInfectedVac;
 
 	myCell = document.getElementById("cell"+y+"-"+x);
-	myCell.style.color = "#000000";
-	myCell.text = "x";
+	myCell.style.background = infectedBG;
+	myCell.text = infectedEmoji;
 	
 	if (y <= 0)
 		startY = 0;
@@ -208,6 +218,27 @@ function infectThis(cellObj)
 	
 	infect(x,y); // Start the recursion
 }
+
+// function noBG()
+// {
+// 	// document.getElementById('noBG').onchange = function () {
+// 	document.getElementById('vaxBGSet').disabled = this.checked;
+// 	document.getElementById('antiVaxBGSet').disabled = this.checked;
+// 	document.getElementById('infectedBGSet').disabled = this.checked;
+// 	};
+// 	noBG = document.getElementById('noBG').checked;
+// 	document.getElementsByClassName('cellBGColor').disabled = noBG;
+// 	if (noBG) {
+// 		vaxBG = "clear"
+// 		antiVaxBG = "clear"
+// 		infectedBG = "clear"
+// 		populate();
+// 	} else {
+// 		vaxBG = document.getElementById('vaxBGSet').value;
+// 		antiVaxBG = document.getElementById('antiVaxBGSet').value;
+// 		infectedBG = document.getElementById('infectedBGSet').value;
+// populate();
+// }
 
 function rightSame()
 {

@@ -20,6 +20,8 @@ body, p, table, td {
 .population table, .population td {
 	font-family: "Times New Roman", Arial, Helvetica, sans-serif;
 	font-size: 18px;
+    border: none;
+    background: #333333;
 }
 
 body {
@@ -31,6 +33,9 @@ h1 {
     color: #f2f2f2;
     text-align: center;
     margin-bottom: -20px;
+}
+h3 {
+    text-align: center;
 }
 h6 {
     color: #f2f2f2;
@@ -45,11 +50,28 @@ header {
     padding: auto;
 }
 
+.emojiSetters {
+    font-size: 80px !important;
+    width: 80px;
+    height: 80px;
+}
+
+.buttonHolder {
+text-align: center;
+}
+
+.button {
+      width: 100%;
+      height: 40px;
+  text-align: center;
+      margin:0 auto;
+}
+
 footer {
     margin: auto;
     padding: auto;
     width: 100%;
-    background-color: #030303;
+background: #333333;
     display: block;
     width: fit-content;
 }
@@ -73,9 +95,9 @@ text-align: center;
 #license {
     flex-grow: 2
     width: 75%;
-border:#cc0000 1px solid;
-margin: auto;
-text-align: center;
+    border: #cc0000 1px solid;
+    margin: auto;
+    text-align: center;
 }
 
 #developers ul li {

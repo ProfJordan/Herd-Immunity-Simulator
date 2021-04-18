@@ -34,12 +34,14 @@ TODO
   * [ ] Convert tables to div
   * [ ] Rewrite JS for new div tags
 * [ ] Other additions
-  * [ ] Emojis vs ASCII ?
+  * [x] Custom Emojis vs ASCII
+  * [ ] Custom Background Cells
   * [ ] Better UI/UX
   * [ ] Better Colors
   * [ ] Dark/Light Mode
 * [ ] Data Examples
-  * [ ] Example testing data for covid-19
+  * [x] Example testing data for covid-19
+  * [ ] Custom population
 
 License
 -----------
