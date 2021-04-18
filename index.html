@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<!--
+    Herd Immunity Simulator
+    ## Pinebee Version v0.0.1 ##
+    
+    Written by Shane Killian (http://www.shanekillian.org/apps/herd.html)
+    Modified by Robert Webb (https://www.software3d.com/Home/Vax/Immunity.php)
+    Re-Modified by Jordan Halliday (https://pinebee.fun/apps/covid-sim/)
+    Fork on GitHub (https://github.com/ProfJordan/Herd-Immunity-Simulator)
+    License: Creative Commons-Attribution-ShareAlike
+    See: (http://creativecommons.org/licenses/by-sa/3.0/)
+    Please attribute Shane Killian & the link: (http://www.shanekillian.org/apps/herd.html)
+    as the original author; as well as attributing and linking any other derivative
+    authors/creators/developers who've contributed code prior to forking in all copies and derivative works.
+-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/main.js"></script>
+    <title>Herd Immunity Simulator</title>
+</head>
+
+<body>
+    <header>
+        <h1>Herd Immunity Simulator</h1>
+        <h6><span style="color: #f2f2f2;"><a style="color: #f2f2f2" href="https://pinebeecreative.com">Pinebee</a></span> Version v0.0.1</h6>
+    </header>
+    <table style="border: 1px solid #cc0000; color: #f2f2f2; margin: auto;" border="0" width="100%" cellspacing="0"
+        cellpadding="0" align="center">
+        <tbody>
+            <tr valign="top">
+                <td style="padding: 10px;" rowspan="2" bgcolor="#333333">
+                    <table style="width: 100%;" border="0" align="center">
+                        <tbody>
+                            <tr>
+                                <td style="width: 100%; text-align: center;">
+                                    <p style="color: #f2f2f2;"><span style="color: #00b000;">o</span> - Vaccinated
+                                        cell<br /> <span style="color: #e00000;">o</span> - Unvaccinated cell<br />
+                                        <span style="color: #f2f2f2;">x</span> - Infected cell</p>
+                                    <p style="color: #f2f2f2;">Click on a cell below to infect it and watch how it
+                                        spreads.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table id="population" class="population" border="0" align="center">
+                        <tbody>
+                            <script type="text/javascript">
+                                infectorFunc();
+                            </script>
+                        </tbody>
+                    </table>
+                    <p>&nbsp;</p>
+                    <table id="populace" align="center" border="0">
+                        <tbody>
+                            <tr>
+                                <td style="text-align: right;">Immunization rate on left: <input id="Left" value=".9"
+                                        onchange="populate();" type="text" size="5"></td>
+                                <td style="text-align: right;">Immunization rate on right: <input id="Right" value=".9"
+                                        onchange="populate()" type="text" size="5" disabled="true"></td>
+                                <td style="text-align: left;"><input id="RightSame" type="checkbox"
+                                        onclick="rightSame()" checked="true">Same as left</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">Infection rate if not vaccinated: <input
+                                        id="InfectionRateNonVac" value=".9" type="text" size="5"></td>
+                                <td style="text-align: right;">Infection rate if vaccinated: <input
+                                        id="InfectionRateVac" value=".1" type="text" size="5"></td>
+                                <td style="text-align: right;"><input value="Repopulate" onclick="populate()"
+                                        type="submit"></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">Infection speed: <input id="InfectionSpeed" value="10"
+                                        type="text" size="5"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <font size=+2><b>Results:</b></font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    Total population:
+                                    <input id="TotalPop" value="" type="text" size="3" readonly>
+                                    =
+                                    <input id="VacPop" value="" type="text" size="3" readonly>
+                                    vaccinated +
+                                    <input id="UnvacPop" value="" type="text" size="3" readonly>
+                                    unvaccinated.<br>
+                                    Number infected:
+                                    <input id="NumInfected" value="" type="text" size="3" readonly>
+                                    =
+                                    <input id="NumVacInfected" value="" type="text" size="3" readonly>
+                                    vaccinated +
+                                    <input id="NumUnvacInfected" value="" type="text" size="3" readonly>
+                                    unvaccinated.<br>
+                                    <font size=+2><b>
+                                            <input id="PercentInfected" value="" type="text" size="3" readonly>
+                                            % of population infected.</b></font><br>
+                                    <input id="PercentVacPopInfected" value="" type="text" size="3" readonly>
+                                    % of vaccinated population infected.<br>
+                                    <input id="PercentUnvacPopInfected" value="" type="text" size="3" readonly>
+                                    % of unvaccinated population infected.<br>
+                                    <font size=+2><b>
+                                            <input id="PercentInfectedVac" value="" type="text" size="3" readonly>
+                                            % of infected that had been vaccinated.</b></font><br>
+                                </td>
+                            <tr>
+                        </tbody>
+                    </table>
+<tr>
+                    <p style="padding: auto; margin: 2.5em;" >Anti-vaccinationists sometimes point to examples of real outbreaks where more than half of those infected had been vaccinated. Surely if most of those infected had been vaccinated then the vaccine isn't much good, right? Wrong. The simulator shows that this is exactly what we expect to find. This is because most of the community is vaccinated, so even though a much lower percentage of those vaccinated become infected, the total number may still be greater. It's a bit of statistical trickery on the anti-vaxxer's part.</p>
+                        </tr>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+<footer>
+<table id="foot-container">
+<tbody>
+<tr>
+<td id="developers">
+        <h4>Developers:</h4>
+        <ul>
+            <li><span>Originally Written by:</span> <a href="http://www.shanekillian.org/apps/herd.html">Shane
+                    Killian</a></li>
+            <li><span>Modified by:</span> <a href="https://www.software3d.com/Home/Vax/Immunity.php">Robert Webb</a>
+            </li>
+            <li><span>Re-Modified by:</span> <a href="https://pinebee.fun/apps/covid-sim/">Jordan Halliday</a></li>
+        </ul>
+        <p>Fork on <a href="https://github.com/ProfJordan/Herd-Immunity-Simulator">GitHub</a></p></td>
+<td id="license">
+        <h4>License:</h4>
+        <h5><strong>Creative Commons-Attribution-ShareAlike</strong></h5>
+
+        <p><a href="http://creativecommons.org/licenses/by-sa/3.0/"><img
+                    src="https://i.creativecommons.org/l/by-sa/3.0/88x31.png" alt="Creative Commons License"></a><br>
+            This work is licensed under a <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons
+                Attribution-ShareAlike 3.0 Unported License</a>.</p>
+        <p>Please attribute <a href="http://www.shanekillian.org/apps/herd.html">Shane Killian</a> as the original author; as well as attributing and linking any other derivative authors/creators/developers who've contributed code prior to forking in all copies and derivative works.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</footer>
+
+</html>
