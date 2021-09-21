@@ -13,6 +13,10 @@ Fork on [GitHub](https://github.com/ProfJordan/Herd-Immunity-Simulator)
 
 Current fork maintained by [ProfJordan](https://github.com/ProfJordan/)
 
+Demo
+---------
+You can find a working demo at: https://pineb.ee/covid-sim
+
 Screenshot
 ---------
 
